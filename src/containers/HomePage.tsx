@@ -1,42 +1,12 @@
 import { Button, Stack, Tab, Tabs, Typography } from "@mui/material";
 import LoginForms from "../components/forms/loginForms/LoginForms";
 import AddNewNumber from "../components/forms/loginForms/AddNewNumber";
-import { useAppDispatch, useAppSelector } from "../store/app/hooks";
-import { useCallback, useEffect, useState } from "react";
 import TabPanel from "../components/tabPanel/TabPanel";
 import { a11yProps } from "../helpers/tabsFunction";
-import { getMessages, logout } from "../store/slices/userSlice";
+import { useHomePage } from "./useHomePage";
 
 const HomePage = () => {
-  const { phoneNumbers, user } = useAppSelector((state) => state.users);
-  const [value, setValue] = useState<number>(0);
-  const dispatch = useAppDispatch();
-
-  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const onClickLogaut = () => {
-    dispatch(logout());
-  };
-
-  const fetchGuide = useCallback(() => {
-    if (user) {
-      dispatch(
-        getMessages({ user: user?.idInstance, token: user?.apiTokenInstance })
-      );
-    }
-  }, [user]);
-
-  useEffect(() => {
-    fetchGuide();
-
-    const intervalId = setInterval(() => {
-      fetchGuide();
-    }, 60000);
-
-    return () => clearInterval(intervalId);
-  }, [fetchGuide]);
+  const { onClickLogaut, handleChange, phoneNumbers, value, user } = useHomePage();
 
   return (
     <>
@@ -119,10 +89,7 @@ const HomePage = () => {
           </Stack>
         </>
       ) : (
-        <Stack
-          marginTop='20%'
-          alignItems="center" 
-        >
+        <Stack marginTop="20%" alignItems="center">
           <LoginForms />
         </Stack>
       )}

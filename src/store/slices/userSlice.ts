@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { ILoginState } from "../../components/forms/loginForms/LoginForms";
 import { axiosApiClient } from "../../helpers/axiosApiClient";
-import { IWebhookMessage } from "../../components/interfaces/getMessage.interface";
-import { IPostMessage } from "../../components/interfaces/postMessage.interface";
+import { IWebhookMessage } from "../../interfaces/getMessage.interface";
+import { IPostMessage } from "../../interfaces/postMessage.interface";
 
 export interface IMessage {
   text: string;
@@ -55,8 +55,6 @@ export const getMessages = createAsyncThunk(
       const response = await axiosApiClient.get<IWebhookMessage | null>(
         `/waInstance${user}/receiveNotification/${token}?receiveTimeout=5`
       );
-
-      console.log(response.data);
 
       if (!response.data) {
         break;
