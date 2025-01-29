@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch } from "../../../store/app/hooks";
@@ -16,7 +16,6 @@ const AddNewNumber = () => {
   const phoneValidationSchema = Yup.object({
     phone: Yup.number()
       .required("Заполните номер телефона")
-      .min(11, "Недостоверный номер"),
   });
   const onClickAddNewPhoneNumber = (values: INewPhone) => {
     dispatch(saveNumber(values))
@@ -26,37 +25,33 @@ const AddNewNumber = () => {
     <Formik
       initialValues={phoneInitialValues}
       validationSchema={phoneValidationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
         onClickAddNewPhoneNumber(values);
+        resetForm();
         setSubmitting(false);
       }}
     >
-      {({ errors, touched, handleChange, handleBlur, values }) => (
-        <Form>
+      {({ handleChange, handleBlur, values }) => (
+        <Form style={{padding: "0 10px"}}>
           <TextField
+            sx={{
+              backgroundColor: '#222e35',
+              borderRadius: '20px',
+              input: { color: 'white' },
+            }}
+            InputLabelProps={{ style: { color: 'white' } }}
+            InputProps={{
+              style: { color: 'white' }
+            }}
             name="phone"
             margin="normal"
             fullWidth
-            label={"phone"}
+            label={"Добавить новый номер"}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.phone}
-            error={touched.phone && Boolean(errors.phone)}
-            helperText={touched.phone && errors.phone}
           />
-
-          <Stack sx={{ position: "relative", width: "100%" }}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="secondary"
-            >
-              Сохранить
-            </Button>
-          </Stack>
         </Form>
       )}
     </Formik>

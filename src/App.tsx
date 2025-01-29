@@ -7,9 +7,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline/>
-      <header></header>
-      <main>
-        <Container maxWidth='xl'>
+      <main className="app">
+        <Container maxWidth="lg" sx={{height: '100%'}}>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
           </Routes>
