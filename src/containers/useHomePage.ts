@@ -28,10 +28,11 @@ export const useHomePage = () => {
 
     const intervalId = setInterval(() => {
       fetchGuide();
-    }, 60000);
+    }, 10000);
 
     return () => clearInterval(intervalId);
   }, [fetchGuide]);
+
   return {
     onClickLogaut,
     handleChange,

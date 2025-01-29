@@ -53,7 +53,7 @@ export const getMessages = createAsyncThunk(
 
     while (true) {
       const response = await axiosApiClient.get<IWebhookMessage | null>(
-        `/waInstance${user}/receiveNotification/${token}?receiveTimeout=5`
+        `/waInstance${user}/receiveNotification/${token}?receiveTimeout=10`
       );
 
       if (!response.data) {
