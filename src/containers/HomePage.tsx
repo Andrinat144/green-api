@@ -51,7 +51,7 @@ const HomePage = () => {
                 backgroundColor: "#111b21",
                 width: "30%",
                 borderRight: "2px solid #222c33",
-                justifyContent: 'space-between'
+                justifyContent: "space-between",
               }}
             >
               <Stack paddingTop={1}>
@@ -88,7 +88,14 @@ const HomePage = () => {
                 </Tabs>
               </Stack>
               <Stack padding={1}>
-                <Button style={{color: 'white'}} sx={{backgroundColor: '#2a3942'}} onClick={onClickLogaut} variant="contained">Выйти</Button>
+                <Button
+                  style={{ color: "white" }}
+                  sx={{ backgroundColor: "#2a3942" }}
+                  onClick={onClickLogaut}
+                  variant="contained"
+                >
+                  Выйти
+                </Button>
               </Stack>
             </Stack>
             <Stack
@@ -112,7 +119,12 @@ const HomePage = () => {
           </Stack>
         </>
       ) : (
-        <LoginForms />
+        <Stack
+          marginTop='20%'
+          alignItems="center" 
+        >
+          <LoginForms />
+        </Stack>
       )}
     </>
   );

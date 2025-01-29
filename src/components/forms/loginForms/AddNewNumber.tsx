@@ -40,7 +40,7 @@ const AddNewNumber = () => {
           <TextField
             sx={{
               backgroundColor: "#222e35",
-              borderRadius: "20px",
+              borderRadius: "10px",
               input: { color: "white" },
             }}
             InputLabelProps={{ style: { color: "white" } }}

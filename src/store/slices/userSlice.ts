@@ -7,7 +7,7 @@ import { IPostMessage } from "../../components/interfaces/postMessage.interface"
 
 export interface IMessage {
   text: string;
-  date: Date;
+  date: string;
   user: boolean;
 }
 
@@ -79,8 +79,8 @@ export const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.removeItem("user");
       localStorage.removeItem("phoneNumbers");
+      localStorage.removeItem("user");
     },
     saveUser: (state, action) => {
       state.user = action.payload;
@@ -95,7 +95,7 @@ export const userSlice = createSlice({
 
       state.phoneNumbers = state.phoneNumbers.map((phone, index) => {
         if (index === id) {
-          const newMessage: IMessage = {text: message, date: new Date(), user: true}
+          const newMessage: IMessage = {text: message, date: new Date().toISOString(), user: true}
           return {
             ...phone,
             messages: Array.isArray(phone.messages)
@@ -128,6 +128,7 @@ export const userSlice = createSlice({
             if (message.body.senderData && message.body.senderData.chatId) {
               const senderPhoneNumber =
                 message.body.senderData.chatId.split("@")[0];
+              const date = new Date(message.body.timestamp * 1000).toISOString()
               const finIndex = state.phoneNumbers.findIndex(
                 (item) => item.phone == parseInt(senderPhoneNumber)
               );
@@ -136,7 +137,7 @@ export const userSlice = createSlice({
                 const newMessage: IMessage = {
                   text:
                     message.body.messageData.textMessageData?.textMessage || "",
-                  date: new Date(message.body.timestamp),
+                  date: date,
                   user: false,
                 };
                 state.phoneNumbers[finIndex].messages = Array.isArray(
