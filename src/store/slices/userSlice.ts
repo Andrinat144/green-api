@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { ILoginState } from "../../components/forms/loginForms/LoginForms";
 import { axiosApiClient } from "../../helpers/axiosApiClient";
+import { IWebhookMessage } from "../../components/interfaces/getMessage.interface";
+import { IPostMessage } from "../../components/interfaces/postMessage.interface";
 
 export interface IMessage {
   text: string;
@@ -21,45 +23,9 @@ interface UserState {
   phoneNumbers: IPhone[];
 }
 
-export interface IPostMessage {
-  post: {
-    chatId: string;
-    message: string;
-  };
-  token: string;
-  user: string;
-}
-
 interface IGetMessages {
   token: string;
   user: string;
-}
-
-interface IWebhookMessage {
-  body: {
-    idMessage: string;
-    instanceData: {
-      idInstance: number;
-      wid: string;
-      typeInstance: string;
-    };
-    messageData: {
-      typeMessage: string;
-      textMessageData?: {
-        textMessage: string;
-      };
-    };
-    senderData: {
-      chatId: string;
-      chatName: string;
-      sender: string;
-      senderName: string;
-      senderContactName: string;
-    };
-    timestamp: number;
-    typeWebhook: string;
-  };
-  receiptId: number;
 }
 
 const initialState: UserState = {
@@ -114,6 +80,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
       localStorage.removeItem("user");
+      localStorage.removeItem("phoneNumbers");
     },
     saveUser: (state, action) => {
       state.user = action.payload;

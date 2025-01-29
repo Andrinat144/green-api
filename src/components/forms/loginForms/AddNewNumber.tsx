@@ -5,20 +5,23 @@ import { useAppDispatch } from "../../../store/app/hooks";
 import { saveNumber } from "../../../store/slices/userSlice";
 
 export interface INewPhone {
-  phone: number;
+  phone: string;
 }
 
 const AddNewNumber = () => {
-   const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const phoneInitialValues: INewPhone = {
-    phone: 0,
+    phone: "",
   };
   const phoneValidationSchema = Yup.object({
-    phone: Yup.number()
-      .required("Заполните номер телефона")
+    phone: Yup.string()
+      .matches(/^\d*$/, "Номер телефона должен содержать только цифры")
+      .required("Заполните номер телефона"),
   });
+
   const onClickAddNewPhoneNumber = (values: INewPhone) => {
-    dispatch(saveNumber(values))
+    const phoneNumber = Number(values.phone);
+    dispatch(saveNumber({ phone: phoneNumber }));
   };
 
   return (
@@ -33,16 +36,16 @@ const AddNewNumber = () => {
       }}
     >
       {({ handleChange, handleBlur, values }) => (
-        <Form style={{padding: "0 10px"}}>
+        <Form style={{ padding: "0 10px" }}>
           <TextField
             sx={{
-              backgroundColor: '#222e35',
-              borderRadius: '20px',
-              input: { color: 'white' },
+              backgroundColor: "#222e35",
+              borderRadius: "20px",
+              input: { color: "white" },
             }}
-            InputLabelProps={{ style: { color: 'white' } }}
+            InputLabelProps={{ style: { color: "white" } }}
             InputProps={{
-              style: { color: 'white' }
+              style: { color: "white" },
             }}
             name="phone"
             margin="normal"
