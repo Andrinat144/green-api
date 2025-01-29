@@ -53,7 +53,7 @@ export const getMessages = createAsyncThunk(
 
     while (true) {
       const response = await axiosApiClient.get<IWebhookMessage | null>(
-        `/waInstance${user}/receiveNotification/${token}?receiveTimeout=10`
+        `/waInstance${user}/receiveNotification/${token}?receiveTimeout=5`
       );
 
       if (!response.data) {
@@ -77,8 +77,9 @@ export const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.removeItem("phoneNumbers");
       localStorage.removeItem("user");
+      state.phoneNumbers = [];
+      localStorage.removeItem("phoneNumbers");
     },
     saveUser: (state, action) => {
       state.user = action.payload;
